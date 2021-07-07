@@ -21,6 +21,8 @@ public class Button {
 	private String title = null;
 	private String pressedTitle = null;
 	private boolean pressedButton = false;
+	private Color txtColor = Color.BLACK;
+	private Font txtFont = new Font("Comics", Font.BOLD, 14);
 	//Constructors//
 	public Button(int baseX, int baseY) // default Button Size
 	{
@@ -111,25 +113,27 @@ public class Button {
 	{
 		return this.pressedButton;
 	}
-	//Methods//
+	public Color getTxtColor() {
+		return txtColor;
+	}
+	public void setTxtColor(Color txtColor) {
+		this.txtColor = txtColor;
+	}
+	public Font getTxtFont() {
+		return txtFont;
+	}
+	public void setTxtFont(Font txtFont) {
+		this.txtFont = txtFont;
+	}
 	public void draw(Graphics g)
 	{
 		g.setColor(this.color);
 		g.fillRect(baseX, baseY, width, height);
-		
-		Font font = new Font("Comics", Font.BOLD, 12);
-		
-		FontMetrics metrics = g.getFontMetrics(font);
-		
-		// Determine the X coordinate for the text
-	    int x = baseX + (width - metrics.stringWidth(this.title)) / 2;
-	    // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
-	    int y = baseY + ((height - metrics.getHeight()) / 2); 
 	    
 		if(this.pressedButton && pressedTitle != null)
-			HUDSdisplay.drawText(g, this.pressedTitle, x, y, font);
+			HUDSdisplay.centerText(g, this.pressedTitle, baseX+width/2, baseY+height/2, txtFont, txtColor);
 		else
-			HUDSdisplay.drawText(g, this.title, x, y, font);
+			HUDSdisplay.centerText(g, this.title, baseX+width/2, baseY+height/2, txtFont, txtColor);
 	}
 	public boolean isInside(float mouseX, float mouseY)
 	{

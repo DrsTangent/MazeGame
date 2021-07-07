@@ -6,7 +6,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import Game.Game;
 /*
  * TANK PROJECT
  * @author : Ali Hussain
@@ -56,5 +55,18 @@ public class HUDSdisplay {
 		// Draw a string such that the top-left corner is at x, y
 		g2d.drawString(Text, x, y+fontMetrics.getAscent());
 		
+	}
+	public static void centerText(Graphics g, String Text, int x, int y, Font font, Color color)
+	{
+		g.setColor(color);
+		
+		Graphics2D g2d = (Graphics2D) g;
+		
+		g2d.setFont(font);
+		
+		FontMetrics fontMetrics = g2d.getFontMetrics();
+		 
+		// Draw a string such that the top-left corner is at x, y
+		g2d.drawString(Text, x-fontMetrics.stringWidth(Text)/2, y+fontMetrics.getAscent()-fontMetrics.getHeight()/2);
 	}
 }
