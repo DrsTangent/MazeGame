@@ -110,12 +110,12 @@ public class MazeAlgorithms {
 	private static ArrayList<Object[]> MST;
 	public static void primsAlgo()
 	{
-		thread = new Thread();
-		thread.start();
 		
 		primSettingUP();
 		
 		primHelper1();
+		thread = new Thread();
+		thread.start();
 		makeMST();
 		try {
 			thread.join();
@@ -161,7 +161,7 @@ public class MazeAlgorithms {
 	}
 	private static void primHelper1()
 	{
-		Object Array[] = new Object[4];
+		Object Array[] = new Object[3];
 		// Node - Key - Parent //
 		primList = new ArrayList<Object[]>();
 		MST = new ArrayList<Object[]>();
@@ -170,10 +170,9 @@ public class MazeAlgorithms {
 			for(int j = 0; j < GridSystem.grid[0].length; j++)
 			{
 				Array = new Object[4];
-				Array[0] = GridSystem.grid[i][j];
+				Array[0] = GridSystem.grid[i][j]; // current Cell
 				Array[1] = 11; // as max distance is 10 so 11 will work as Infinity //
-				Array[2] = null;
-				Array[3] = -1;
+				Array[2] = null; // Parent Cell
 				primList.add(Array);
 			}
 		}

@@ -1,9 +1,5 @@
 package Game;
 
-import javax.swing.*;
-
-import ScreenComponents.HUDSdisplay;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -17,7 +13,7 @@ import javax.imageio.ImageIO;
 public class Game extends Canvas implements Runnable, MouseListener{
                                                    
     public static final int WIDTH = 600;                                  
-    public static final int HEIGHT = 600; 
+    public static final int HEIGHT = WIDTH; 
     public static int LEVEL  = 5; // Medium
     public static final int menuWIDTH = 200;      
     public static int algoSpeed = 25; // Medium
@@ -27,13 +23,14 @@ public class Game extends Canvas implements Runnable, MouseListener{
    	private Thread thread;                                                          
 
     //Variables Declration
-    private BufferedImage background;
+    public BufferedImage background;
     public static GridSystem MazeSet;
     private Starter startGame;
     
     public static enum STATE{                                                                   
         GAME,                                                                                  
         STARTMENU,
+        WINNER,
     };
     public static STATE state =  STATE.STARTMENU;                                                 
 
@@ -117,7 +114,13 @@ public class Game extends Canvas implements Runnable, MouseListener{
         if(state==STATE.GAME) { 
         	if(GridSystem.grid[GridSystem.currentX][GridSystem.currentY].getEnding())
         	{
-        		Game.state = STATE.STARTMENU;
+        		try {
+					background = ImageIO.read(getClass().getResource("/winner.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        		Game.state = STATE.WINNER;
         	}
         }
     }
@@ -138,6 +141,10 @@ public class Game extends Canvas implements Runnable, MouseListener{
         }
         if(state == STATE.STARTMENU){
         	startGame.render(g);
+        }
+        if(state == STATE.WINNER)
+        {
+        	WinnerScreen.render(g);
         }
 
         g.dispose();                                                                            
@@ -170,6 +177,18 @@ public class Game extends Canvas implements Runnable, MouseListener{
     			state = STATE.GAME;
             }
 
+        }
+        else if(state == STATE.WINNER)
+        {
+        	if(key == KeyEvent.VK_ENTER){     
+		    	try {
+					background = ImageIO.read(getClass().getResource("/MazeRunnerBackground.png"));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		    	state = STATE.STARTMENU;
+        	}
         }
     }
 

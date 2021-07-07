@@ -8,7 +8,7 @@ import java.awt.Graphics;
 import ScreenComponents.Button;
 import ScreenComponents.HUDSdisplay;
 /*
- * TANK PROJECT
+ * Maze Runner
  * @author : Ali Hussain
  */
 public class Starter {
@@ -25,9 +25,7 @@ public class Starter {
 	}
     public void render(Graphics g) { 
     	String Text = "Press Enter to Start the Game";
-    	FontMetrics metrics = g.getFontMetrics(fnt0);
-    	int txtWidth = metrics.stringWidth(Text);
-        HUDSdisplay.drawText(g, Text, (Game.WIDTH + Game.menuWIDTH)/2 - txtWidth/2, 350, fnt0, Color.WHITE);
+        HUDSdisplay.centerText(g, Text, (Game.WIDTH + Game.menuWIDTH)/2, 375, fnt0, Color.WHITE);
         
         Easy.draw(g);
 		Medium.draw(g);

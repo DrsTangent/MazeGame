@@ -2,24 +2,26 @@ package Game;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+
+import DataStrucutes.aStarPriority;
+import DataStrucutes.dQueue;
+import DataStrucutes.dStack;
 
 public class PathFinding {
 
 	private static Thread thread; 
-	private static Queue<Stack<Cell>> cellStackQueue;
-	private static ArrayList<Stack<Cell>> aStarList;
+	private static dQueue<dStack<Cell>> cellStackQueue;
+	private static aStarPriority aStarList;
 	private static boolean pathFound;
 	public static void BFS(Cell Starter)
 	{
-		cellStackQueue = new LinkedList<Stack<Cell>>();
+		cellStackQueue = new dQueue<dStack<Cell>>();
 		pathFound = false;
 		
 		//makeallUnvisied(Starter);
 		GridSystem.allUnvisited();
 		GridSystem.setAllWhite();
-		Stack<Cell> newStack = new Stack<Cell>();
+		dStack<Cell> newStack = new dStack<Cell>();
 		newStack.add(Starter);
 		cellStackQueue.add(newStack);
 		thread = new Thread();                                                             
@@ -30,12 +32,12 @@ public class PathFinding {
 	{
 		if(pathFound == true)
 		{
-			while(cellStackQueue.size() > 1)
+			dStack<Cell> newStack = new dStack<Cell>();
+			while(cellStackQueue.size() > 0)
 			{
-				cellStackQueue.remove();
+				newStack = cellStackQueue.remove();
 			}
-			Stack<Cell> newStack = cellStackQueue.remove();
-			while(newStack.size() > 0)
+			while(!newStack.isEmpty())
 			{
 				newStack.pop().setCellColor(new Color(205,205,205));
 			}
@@ -58,13 +60,13 @@ public class PathFinding {
 	//A* Algorithm//
 	public static void aStar(Cell Starter)
 	{
-		aStarList = new ArrayList<Stack<Cell>>();
+		aStarList = new aStarPriority();
 		pathFound = false;
 		
 		//makeallUnvisied(Starter);
 		GridSystem.allUnvisited();
 		GridSystem.setAllWhite();
-		Stack<Cell> newStack = new Stack<Cell>();
+		dStack<Cell> newStack = new dStack<Cell>();
 		newStack.add(Starter);
 		aStarList.add(newStack);
 		thread = new Thread();                                                             
@@ -75,12 +77,8 @@ public class PathFinding {
 	{
 		if(pathFound == true)
 		{
-			while(aStarList.size() > 1)
-			{
-				aStarList.remove(0);
-			}
-			Stack<Cell> newStack = aStarList.remove(0);
-			while(newStack.size() > 0)
+			dStack<Cell> newStack = aStarList.remove();
+			while(!newStack.isEmpty())
 			{
 				newStack.pop().setCellColor(new Color(205,205,205));
 			}
@@ -96,30 +94,14 @@ public class PathFinding {
 			if(aStarList.isEmpty())
 				return;
 			
-			addValidNeighbours(aStarList, minimumDistanceStack(aStarList));
+			addValidNeighbours(aStarList, aStarList.remove());
 			AaddingNode();
 		}	
 	}
-	
-	private static Stack<Cell> minimumDistanceStack(ArrayList<Stack<Cell>> arrayList)
-	{
-		Stack<Cell> smallestDistanceS = arrayList.get(0);
-		int index = 0;
-		for(int i = 0; i<arrayList.size(); i++)
-		{
-			if(arrayList.get(index).peek().distance() > arrayList.get(i).peek().distance())
-			{
-				index = i;
-			}
-		}
-		smallestDistanceS = arrayList.get(index);
-		arrayList.remove(index);
-		return smallestDistanceS;
-	}
 	//Adding Neighbours Functions//
-	private static void addValidNeighbours(ArrayList<Stack<Cell>> aStarStacks, Stack<Cell> currentCellStack)
+	private static void addValidNeighbours(aStarPriority aStarStacks, dStack<Cell> currentCellStack)
 	{
-		if(currentCellStack.size() == 0)
+		if(currentCellStack.isEmpty())
 			return;
 		try {
 			Thread.sleep(Game.algoSpeed);
@@ -132,7 +114,7 @@ public class PathFinding {
 		{
 			if(currentCellStack.peek().access[i] != null &&  !currentCellStack.peek().access[i].getVisited())
 			{
-				Stack<Cell> newStack = (Stack<Cell>) currentCellStack.clone();
+				dStack<Cell> newStack = (dStack<Cell>) currentCellStack.clone();
 				newStack.add(currentCellStack.peek().access[i]);
 				currentCellStack.peek().access[i].setVisited(true);
 				currentCellStack.peek().access[i].setCellColor(new Color(255,255,51));
@@ -145,9 +127,9 @@ public class PathFinding {
 			}
 		}
 	}
-	private static void addValidNeighbours(Queue<Stack<Cell>> stacksQueue, Stack<Cell> currentCellStack)
+	private static void addValidNeighbours(dQueue<dStack<Cell>> stacksQueue, dStack<Cell> currentCellStack)
 	{
-		if(currentCellStack.size() == 0)
+		if(currentCellStack.isEmpty())
 			return;
 		try {
 			Thread.sleep(Game.algoSpeed);
@@ -160,7 +142,7 @@ public class PathFinding {
 		{
 			if(currentCellStack.peek().access[i] != null &&  !currentCellStack.peek().access[i].getVisited())
 			{
-				Stack<Cell> newStack = (Stack<Cell>) currentCellStack.clone();
+				dStack<Cell> newStack = (dStack<Cell>) currentCellStack.clone();
 				newStack.add(currentCellStack.peek().access[i]);
 				currentCellStack.peek().access[i].setVisited(true);
 				currentCellStack.peek().access[i].setCellColor(new Color(255,255,51));

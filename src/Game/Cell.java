@@ -23,6 +23,7 @@ public class Cell implements Comparable<Cell>{
 	private Color cellColor;
 	public Cell(int x, int y, int size)
 	{
+		
 		visited = false;
 		hasPlayer = false;
 		endingPoint = false;
@@ -94,6 +95,7 @@ public class Cell implements Comparable<Cell>{
 		Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(3));
 	}
+	// For Prims 
 	public static void setDestPoint(Cell d)
 	{
 		destPoint = d;
