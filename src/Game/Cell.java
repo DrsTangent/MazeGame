@@ -1,3 +1,8 @@
+/*
+@Author: Ali Hussain
+@Project: Maze Game
+*/
+
 package Game;
 
 import java.awt.BasicStroke;
