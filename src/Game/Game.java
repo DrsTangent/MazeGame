@@ -1,3 +1,8 @@
+/*
+@Author: Ali Hussain
+@Project: Maze Game
+Note: Help from an online Resource "https://www.codebean.se/skapa-ditt-eget-spel-uppbyggnad-av-spelet/"
+*/
 package Game;
 
 import java.awt.*;
