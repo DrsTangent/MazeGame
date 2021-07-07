@@ -9,10 +9,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 import ScreenComponents.HUDSdisplay;
-/*
- * MazeProject
- * @author : Ali Hussain
- */
 public final class WinnerScreen {
 	
 	public static void render(Graphics g)
