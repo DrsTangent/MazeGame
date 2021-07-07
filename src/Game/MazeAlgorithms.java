@@ -1,3 +1,7 @@
+/*
+@Author: Ali Hussain & Abdul Mateen
+@Project: Maze Game
+*/
 package Game;
 
 import java.awt.Color;
